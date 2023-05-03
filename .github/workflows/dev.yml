@@ -31,4 +31,4 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo Dev workflow,
-          echo ${{ vars.STORAGEACCOUNT }} Multiline script.
+          echo "::debug::${{ vars.STORAGEACCOUNT }} Multiline script."

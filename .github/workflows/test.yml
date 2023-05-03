@@ -1,14 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Test Staging workflow
+name: Test Dev workflow
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "staging" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "staging" ]
+    branches: [ "dev" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,10 +27,10 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo TEST Staging workflow helloword!
+        run: echo TEST Dev workflow helloword!
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo TEST Staging workflow,
+          echo TEST Dev workflow,
           echo TEST Multiline script.

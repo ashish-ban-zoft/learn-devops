@@ -32,5 +32,7 @@ jobs:
         run: |
           echo Staging workflow,
           echo "${{ env.STORAGEACCOUNT }}Multiline script."
+      - name: Dump env context
+        run: echo '${{ env }}'
       - name: Dump Vars context
-        run: echo '${{ toJSON(env) }}'
+        run: echo '${{ toJSON(vars) }}'

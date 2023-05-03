@@ -31,6 +31,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo Dev workflow,
-          echo "Multiline script."
+          echo "${{ env.STORAGEACCOUNT }}Multiline script."
       - name: Dump Vars context
-        run: echo '${{ toJSON(vars) }}'
+        run: echo '${{ toJSON(env) }}'

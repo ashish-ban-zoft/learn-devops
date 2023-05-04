@@ -1,11 +1,26 @@
 name: Deploy to env
 
+env:
+  PROMOTION_ENV: "dev"
+
 on:
   push:
     branches:
       - "master"
       - "staging"
       - "dev"
+
+  workflow_dispatch:
+    inputs:
+      PROMOTION_ENV:
+        description: "Select an environment to deploy the app"
+        required: true
+        type: choice
+        default: dev
+        options:
+          - dev
+          - prod
+          - staging
 
 jobs:
   build:

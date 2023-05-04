@@ -24,10 +24,10 @@ on:
 
 jobs:
   build:
-    name: Promote to ${{ env.PROMOTION_ENV }}
+    name: Promote
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2
-      - name: Promote to ${{ env.PROMOTION_ENV }}
+      - name: Promote
         run: echo "Running on ${basename ${GITHUB_REF}} branch"

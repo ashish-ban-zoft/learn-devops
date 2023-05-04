@@ -26,8 +26,12 @@ jobs:
   build:
     name: Promote
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2
       - name: Promote
-        run: echo "Running on ${basename ${GITHUB_REF}} branch"
+        run: |
+          echo Running on ${basename ${GITHUB_REF}} branch

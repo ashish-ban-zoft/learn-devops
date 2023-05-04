@@ -25,6 +25,18 @@ jobs:
     defaults:
       run:
         shell: bash
+    if: >-
+      ( 
+      ${{ github.ref == 'refs/heads/' + github.event.inputs.PROMOTION_ENV }} 
+      && 
+      ${{ github.event.inputs.PROMOTION_ENV != 'prod'}}
+      ) 
+      || 
+      (
+      ${{ github.ref == 'refs/heads/master' }} 
+      && 
+      ${{ github.event.inputs.PROMOTION_ENV == 'prod'}}
+      )
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2

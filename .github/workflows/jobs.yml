@@ -1,15 +1,11 @@
 name: Deploy to env
 
-env:
-  PROMOTION_ENV: "dev"
-
 on:
   push:
     branches:
       - "master"
       - "staging"
       - "dev"
-
   workflow_dispatch:
     inputs:
       PROMOTION_ENV:

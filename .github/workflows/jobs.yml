@@ -1,0 +1,19 @@
+name: Deploy to env
+
+on:
+  push:
+    branches:
+      - "master"
+      - "staging"
+      - "dev"
+
+jobs:
+  build:
+    if: ${{ github.ref == 'refs/heads/' + env.PROMOTION_ENV }}
+    name: Promote to ${{ env.PROMOTION_ENV }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Code"
+        uses: actions/checkout@v2
+      - name: Promote to ${{ env.PROMOTION_ENV }}
+        run: echo "Running on ${basename ${GITHUB_REF}} branch"

@@ -1,0 +1,33 @@
+name: Deploy to env
+
+on:
+  push:
+    branches:
+      - "master"
+      - "staging"
+      - "dev"
+  workflow_dispatch:
+    inputs:
+      PROMOTION_ENV:
+        description: "Select an environment to deploy the app"
+        required: true
+        type: choice
+        default: dev
+        options:
+          - dev
+          - prod
+          - staging
+
+jobs:
+  build:
+    name: Promote
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: "Checkout Code"
+        uses: actions/checkout@v2
+      - name: Promote
+        run: |
+          echo Running on $(basename ${GITHUB_REF}) branch

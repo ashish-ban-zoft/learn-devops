@@ -34,4 +34,4 @@ jobs:
         uses: actions/checkout@v2
       - name: Promote
         run: |
-          echo Running on ${basename ${GITHUB_REF}} branch
+          echo Running on $(basename ${GITHUB_REF}) branch

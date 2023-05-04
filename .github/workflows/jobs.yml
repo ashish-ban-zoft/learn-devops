@@ -9,9 +9,9 @@ on:
 
 jobs:
   build:
-    if: ${{ github.ref == 'refs/heads/' + env.PROMOTION_ENV }}
     name: Promote to ${{ env.PROMOTION_ENV }}
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/' + env.PROMOTION_ENV }}
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2

@@ -27,7 +27,7 @@ jobs:
         shell: bash
     if: >-
       ( 
-      ${{ github.ref == ('refs/heads/' + ${{ github.event.inputs.PROMOTION_ENV }}) }} 
+      ${{ github.ref == format('refs/heads/{0}', github.event.inputs.PROMOTION_ENV) }} 
       && 
       ${{ github.event.inputs.PROMOTION_ENV != 'prod'}}
       ) 

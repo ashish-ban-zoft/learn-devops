@@ -23,7 +23,8 @@ jobs:
   build:
     name: Promote
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_slug }}
+#     environment: ${{ github.ref_slug }}
+    environment: dev
     defaults:
       run:
         shell: bash
@@ -49,6 +50,6 @@ jobs:
           STORAGEACCOUNT: ${{ vars.STORAGEACCOUNT }}
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
-          echo ${{ job.environment }}
-          echo ${{ vars.STORAGEACCOUNT }}
+          echo "Env: $ENVIRONMENT"
+          echo "Account : $STORAGEACCOUNT"
 

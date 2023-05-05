@@ -50,5 +50,5 @@ jobs:
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
           echo "With Environment $ENVIRONMENT"
-          echo "Vars: $(format( '1 {0}',${STORAGEACCOUNT}))"
+          echo Vars: $(format("1 {0}",${STORAGEACCOUNT}))
 

@@ -23,7 +23,7 @@ jobs:
   build:
     name: Promote
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name }}
+#     environment: ${{ github.ref_name }}
     defaults:
       run:
         shell: bash

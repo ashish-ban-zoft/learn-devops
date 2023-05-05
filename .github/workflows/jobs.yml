@@ -45,9 +45,9 @@ jobs:
 
       - name: Promote
         env:
-            JOB_ENV: ${{ job.environment }}
-            SLUG: ${{ github.ref_name }}
-            VAR: ${{ toJSON(vars) }}
+          JOB_ENV: ${{ job.environment }}
+          SLUG: ${{ github.ref_name }}
+          VAR: ${{ toJSON(vars) }}
 
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch

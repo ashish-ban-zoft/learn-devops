@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [closed]
     branches:
-      - "master"
+      - "production"
       - "staging"
       - "dev"
   workflow_dispatch:
@@ -38,7 +38,7 @@ jobs:
       && 
       ${{ github.event.inputs.PROMOTION_ENV == 'production'}}
       )
-    environment: ${{ if startsWith(github.ref, 'refs/heads/master') }}production{{ else }}${{ github.ref_slug }}{{ endif }}
+    environment: ${{ github.ref_slug }}
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2
@@ -46,3 +46,4 @@ jobs:
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
           echo "With Environment ${{ job.environment }}"
+          echo "Vars: ${{ vars.STORAGEACCOUNT }} "

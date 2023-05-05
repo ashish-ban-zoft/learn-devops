@@ -48,9 +48,9 @@ jobs:
         env:
 #           ENVIRONMENT: ${{ job.environment }}
             ENVIRONMENT: ${{ github.ref_slug }}
-            STORAGEACCOUNT: ${{ vars.STORAGEACCOUNT }}
+            VAR: ${{ vars }}
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
           echo "Env: $ENVIRONMENT"
-          echo "Account : ${{ github.ref_slug }}"
+          echo "Account : $VAR"
 

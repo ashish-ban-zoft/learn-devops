@@ -46,7 +46,7 @@ jobs:
       - name: Promote
         env:
           ENVIRONMENT: ${{ job.environment }}
-          STORAGEACCOUNT: ${{ vars.STORAGEACCOUNT }}
+          STORAGEACCOUNT: ${{ env.STORAGEACCOUNT }}
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
           echo "With Environment $ENVIRONMENT"

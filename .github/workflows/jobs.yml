@@ -23,8 +23,7 @@ jobs:
   build:
     name: Promote
     runs-on: ubuntu-latest
-#     environment: ${{ github.ref_slug }}
-    environment: dev
+    environment: ${{ github.ref_name }}
     defaults:
       run:
         shell: bash
@@ -47,8 +46,8 @@ jobs:
       - name: Promote
         env:
             JOB_ENV: ${{ job.environment }}
-            SLUG: ${{ github.ref_slug }}
-            VAR: ${{ vars }}
+            SLUG: ${{ github.ref_name }}
+            VAR: ${{ toJSON(vars) }}
 
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch

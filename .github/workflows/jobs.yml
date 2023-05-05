@@ -2,43 +2,23 @@ name: Deploy to env
 
 on:
   pull_request:
-    types: [closed]
+    types:
+      - closed
     branches:
+      - "master"
       - "production"
       - "staging"
       - "dev"
-  workflow_dispatch:
-    inputs:
-      PROMOTION_ENV:
-        description: "Select an environment to deploy the app"
-        required: true
-        type: choice
-        default: dev
-        options:
-          - dev
-          - production
-          - staging
 
 jobs:
-  build:
+  if_merged:
+    if: github.event.pull_request.merged == true
     name: Promote
     runs-on: ubuntu-latest
     environment: dev
     defaults:
       run:
         shell: bash
-    if: >-
-      ( 
-      ${{ github.ref == format('refs/heads/{0}', github.event.inputs.PROMOTION_ENV) }} 
-      && 
-      ${{ github.event.inputs.PROMOTION_ENV != 'production'}}
-      ) 
-      || 
-      (
-      ${{ github.ref == 'refs/heads/master' }} 
-      && 
-      ${{ github.event.inputs.PROMOTION_ENV == 'production'}}
-      )
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2

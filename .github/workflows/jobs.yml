@@ -23,8 +23,7 @@ jobs:
   build:
     name: Promote
     runs-on: ubuntu-latest
-#     environment: ${{ github.ref_slug }}
-    environment: dev
+    environment: ${{ github.ref_name }}
     defaults:
       run:
         shell: bash
@@ -46,13 +45,15 @@ jobs:
 
       - name: Promote
         env:
-#           ENVIRONMENT: ${{ job.environment }}
-            ENVIRONMENT: ${{ github.ref_slug }}
-            VAR: ${{ vars }}
+            JOB_ENV: ${{ job.environment }}
+            SLUG: ${{ github.ref_name }}
+            VAR: ${{ toJSON(vars) }}
+
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
-          echo "Env: $ENVIRONMENT"
-          echo "Account : $VAR"
+          echo "$JOB_ENV"
+          echo "$SLUG"
+          echo "$VAR"
     
 
   logcontext:
@@ -60,7 +61,8 @@ jobs:
     steps:
       - name: Dump GitHub context
         env:
-          GITHUB_CONTEXT: ${{ toJSON(vars) }}
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          
         run: echo "$GITHUB_CONTEXT"
         
         

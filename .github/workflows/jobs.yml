@@ -49,6 +49,6 @@ jobs:
           STORAGEACCOUNT: ${{ vars.STORAGEACCOUNT }}
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
-          echo With Environment $(format("1 {0}",${job.environment}))
-          echo Vars: $(format("1 {0}",${vars.STORAGEACCOUNT}))
+          echo ${{ job.environment }}
+          echo ${{ vars.STORAGEACCOUNT }}
 

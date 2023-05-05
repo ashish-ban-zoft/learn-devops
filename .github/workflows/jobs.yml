@@ -23,6 +23,7 @@ jobs:
   build:
     name: Promote
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_slug }}
     defaults:
       run:
         shell: bash
@@ -38,17 +39,16 @@ jobs:
       && 
       ${{ github.event.inputs.PROMOTION_ENV == 'production'}}
       )
-    environment: ${{ github.ref_slug }}
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2
 
       - name: Promote
         env:
-          ENVIRONMENT: ${{ job.environment }}
+          ENVIRONMENT: ${{ jobs.environment }}
           STORAGEACCOUNT: ${{ vars.STORAGEACCOUNT }}
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
           echo "With Environment $ENVIRONMENT"
-          echo "Vars: ${STORAGEACCOUNT}"
+          echo "Vars: $(format( '1 {0}',${STORAGEACCOUNT}))"
 

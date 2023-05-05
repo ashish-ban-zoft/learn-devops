@@ -42,8 +42,13 @@ jobs:
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2
+
       - name: Promote
+        env:
+          ENVIRONMENT: ${{ job.environment }}
+          STORAGEACCOUNT: ${{ vars.STORAGEACCOUNT }}
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
-          echo With Environment $(${{ job.environment }})
-          echo Vars: $(${{ vars.STORAGEACCOUNT }})
+          echo "With Environment $ENVIRONMENT"
+          echo "Vars: $STORAGEACCOUNT"
+

@@ -1,7 +1,8 @@
 name: Deploy to env
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - "master"
       - "staging"
@@ -15,7 +16,7 @@ on:
         default: dev
         options:
           - dev
-          - prod
+          - production
           - staging
 
 jobs:
@@ -29,17 +30,19 @@ jobs:
       ( 
       ${{ github.ref == format('refs/heads/{0}', github.event.inputs.PROMOTION_ENV) }} 
       && 
-      ${{ github.event.inputs.PROMOTION_ENV != 'prod'}}
+      ${{ github.event.inputs.PROMOTION_ENV != 'production'}}
       ) 
       || 
       (
       ${{ github.ref == 'refs/heads/master' }} 
       && 
-      ${{ github.event.inputs.PROMOTION_ENV == 'prod'}}
+      ${{ github.event.inputs.PROMOTION_ENV == 'production'}}
       )
+    environment: ${{ if startsWith(github.ref, 'refs/heads/master') }}production{{ else }}${{ github.ref_slug }}{{ endif }}
     steps:
       - name: "Checkout Code"
         uses: actions/checkout@v2
       - name: Promote
         run: |
           echo Running on $(basename ${GITHUB_REF}) branch
+          echo "With Environment ${{ job.environment }}"

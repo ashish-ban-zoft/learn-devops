@@ -9,6 +9,7 @@ on:
       - "production"
       - "staging"
       - "dev"
+  workflow_dispatch:
 
 jobs:
   if_merged:

@@ -62,7 +62,7 @@ jobs:
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs )"
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs )"
           echo "Changed files are "
-          echo "$(git diff --name-only --diff-filter=ACMERT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs )"
+          echo "$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs )"
         
   lint:
       runs-on: ubuntu-latest

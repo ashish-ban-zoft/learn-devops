@@ -12,7 +12,7 @@ on:
 
 jobs:
   if_merged:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch' 
     name: Promote
     runs-on: ubuntu-latest
     environment: dev
@@ -44,5 +44,28 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
           
         run: echo "$GITHUB_CONTEXT"
+
+  changedfiles:
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs: 
+      all: ${{ steps.changes.outputs.all }}
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Get Changed files
+        id: changes
+        # Set outputs using the command
+        run: |
+          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMERT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs )"
+          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMERT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs )"
         
-        
+  lint:
+      runs-on: ubuntu-latest
+      # require the first job to have ran
+      needs: changedfiles
+      # only run there are changed files
+      if: ${{needs.changedfiles.outputs.ts}}
+      steps:
+        - name: echo changed files
+          run: echo ${{needs.changedfiles.outputs.ts}}

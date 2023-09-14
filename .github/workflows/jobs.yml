@@ -76,3 +76,36 @@ jobs:
             echo ${{needs.changedfiles.outputs.all}}
             echo "TS changed files"
             echo ${{needs.changedfiles.outputs.ts}}
+            list_of_changed_files=$(echo ${{needs.changedfiles.outputs.all}})
+            
+            # pattern to check if starts with rpm-root-config, followed by and chars and ends with a space
+            directory_name=" rpm-root-config* $"
+
+            # list of changed files string is split to array, so we can match for the folder name and filter out the 
+            # rpm-root-config directory.
+            split_names=($list_of_changed_files) 
+
+            # filtered paths
+            filtered_paths=() 
+
+            # variable to store the list of filtered paths as a single
+            # string to pass as upload paths to az cli function 
+            file_names="" 
+
+            # Loop on split names and check if name matches the required directory name pattern.
+            for i in "${split_names[@]}"; do 
+                if [[ $i =~ rpm-root-config/* ]]; then
+                filtered_paths+=($i)
+                fi
+            done
+
+            for i in "${filtered_paths[@]}"; do 
+              file_names="${file_names} ${i}"
+            done
+
+            echo "$file_names"
+
+            newstring=$(echo "${file_names//rpm-root-config/ }")
+            echo "$newstring"
+            newstring=$(echo "${newstring//// }")
+            echo "az storage blob delete --account-name \$web -d $newstring"

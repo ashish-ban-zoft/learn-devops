@@ -74,12 +74,14 @@ jobs:
           run: | 
             echo "All changed files"
             echo ${{needs.changedfiles.outputs.all}}
-            echo "TS changed files"
-            echo ${{needs.changedfiles.outputs.ts}}
+            # echo "TS changed files"
+            # echo ${{needs.changedfiles.outputs.ts}}
+
+            # Long string of all the changed files seperated by space
             list_of_changed_files=$(echo "${{needs.changedfiles.outputs.all}}")
 
-            # list of changed files string is split to array, so we can match for the folder name and filter out the 
-            # rpm-root-config directory.
+            # list of changed files string is split to array, so we can match for 
+            # the folder name and filter out the rpm-root-config directory.
             split_names=($list_of_changed_files) 
 
             # filtered paths
@@ -102,7 +104,11 @@ jobs:
 
             echo "$file_names"
 
+            # remove 'rpm-root-config' from the names
             newstring=$(echo "${file_names//rpm-root-config/ }")
             echo "$newstring"
+
+            # Remove the '/'
             newstring=$(echo "${newstring//// }")
+
             echo "az storage blob delete --account-name \$web -d $newstring"
